@@ -10,10 +10,38 @@ namespace AgeCalculator
     {
         static void Main(string[] args)
         {
-            //Define Input and Starting Variables
-            Console.WriteLine("What is your birthday? (Enter date in format MM/DD/YYYY: 04/19/1988)");
-            string input = Console.ReadLine();
+            //Define Starting Variables
+            bool validinput = false;
+            string input = "";
+            DateTime dateValue;
 
+            // Capture user input
+            Console.WriteLine("What is your birthday? (Enter date in format MM/DD/YYYY: 04/19/1988)");
+            input = Console.ReadLine();
+
+            //Validate user input is in proper format, recapture if not
+            while (validinput == false)
+            {
+                if (DateTime.TryParse(input, out dateValue))
+                {
+                    if (dateValue > DateTime.Now)
+                    {
+                        Console.WriteLine("Your date appears to be in the future. Please enter a date in the past using this format: MM/DD/YYYY: 04/19/1988");
+                        input = Console.ReadLine();
+                    }
+                    else
+                    {
+                        validinput = true;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please enter the date in the proper format: MM/DD/YYYY: 04/19/1988)");
+                    input = Console.ReadLine();
+                }
+            }
+
+            //Refreshes calculation every second
             while (true)
             {
                 DateTime today = DateTime.Now;
@@ -40,19 +68,20 @@ namespace AgeCalculator
                 int pubdays = Convert.ToInt32(wholedays);
 
                 //Bonus - Get Hours, Minutes, Seconds, Milliseconds
-                int hours = dbldays.Hours;
-                int minutes = dbldays.Minutes;
-                int seconds = dbldays.Seconds;
-                int milliseconds = dbldays.Milliseconds;
+                int pubhours = dbldays.Hours;
+                int pubminutes = dbldays.Minutes;
+                int pubseconds = dbldays.Seconds;
+                int pubmilliseconds = dbldays.Milliseconds;
 
                 //Console.WriteLine(dbldays);
                 //Console.WriteLine("You are " + pubyears + " years, " + pubweeks + " weeks and " + pubdays+ " days old.");
-                Console.WriteLine("You are " + pubyears + " years, " + pubweeks + " weeks, " + pubdays + " days, " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds, and " + milliseconds + " milliseconds old.");
+                Console.WriteLine("You are " + pubyears + " years, " + pubweeks + " weeks, " + pubdays + " days, " + pubhours + " hours, " + pubminutes + " minutes, " + pubseconds + " seconds, and " + pubmilliseconds + " milliseconds old.");
                 //Console.ReadLine();
 
                 System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
 
             }
+                            
         }
     }
 }
